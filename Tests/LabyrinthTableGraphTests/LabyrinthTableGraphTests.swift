@@ -30,7 +30,13 @@ class LabyrinthTableGraphTests: XCTestCase {
         
         XCTAssertEqual(ret, true)
 
-        //XCTAssertEqual(t.description, "...")
+        XCTAssertEqual(t.description, """
+xxxxx
+xxxxx
+⊢⊤⊥-⊣
+xxxxx
+xxxxx
+""")
     }
 
     func jsonTest() {
@@ -43,7 +49,7 @@ class LabyrinthTableGraphTests: XCTestCase {
         let original = t.description
 
         let data = try! JSONEncoder().encode(t)
-        let string = String(data: data, encoding: .utf8)!
+        //let string = String(data: data, encoding: .utf8)!
 
         let t2 = try! JSONDecoder().decode(LabyrinthTableGraph.self, from: data)
         
@@ -60,8 +66,9 @@ class LabyrinthTableGraphTests: XCTestCase {
         t[2,4] = Box.Intersection(direction: .West)
 
         let path = t.shortestPath(fromRowCol: (2, 0), toRowCol: (2, 4))
+        let pathString = path!.compactMap{ String($0.rawValue) }.reduce("") { $0 + $1 + "-" }
 
-        //XCTAssertEqual(path, "...")
+        XCTAssertEqual(pathString, "3-3-3-3-")
     }
 
     static var allTests = [
