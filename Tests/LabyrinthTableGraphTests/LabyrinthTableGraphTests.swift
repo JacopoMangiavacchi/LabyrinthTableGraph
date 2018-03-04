@@ -15,7 +15,7 @@ class LabyrinthTableGraphTests: XCTestCase {
         super.tearDown()
     }
    
-    func moveTest() {
+    func testMove() {
         t[2,0] = Box.Intersection(direction: .North)
         t[2,1] = Box.Intersection(direction: .South)
         t[2,2] = Box.Linear(orientation: .Horizontal)
@@ -36,10 +36,11 @@ xxxxx
 ⊢⊤⊥-⊣
 xxxxx
 xxxxx
+
 """)
     }
 
-    func jsonTest() {
+    func testJson() {
         t[2,0] = Box.Intersection(direction: .North)
         t[2,1] = Box.Intersection(direction: .South)
         t[2,2] = Box.Linear(orientation: .Horizontal)
@@ -58,22 +59,22 @@ xxxxx
         XCTAssertEqual(original, reEncoded)
     }
 
-    func dijkstraTest() {
+    func testDijkstra() {
         t[2,0] = Box.Intersection(direction: .North)
         t[2,1] = Box.Intersection(direction: .South)
         t[2,2] = Box.Linear(orientation: .Horizontal)
         t[2,3] = Box.Intersection(direction: .East)
         t[2,4] = Box.Intersection(direction: .West)
 
-        let path = t.shortestPath(fromRowCol: (2, 0), toRowCol: (2, 4))
+        let path = t.shortestPath(fromRowCol: (2, 0), toRowCol: (2, 3))
         let pathString = path!.compactMap{ String($0.rawValue) }.reduce("") { $0 + $1 + "-" }
 
-        XCTAssertEqual(pathString, "3-3-3-3-")
+        XCTAssertEqual(pathString, "3-3-3-")
     }
 
     static var allTests = [
-        ("moveTest", moveTest),
-        ("jsonTest", jsonTest),
-        ("dijkstraTest", dijkstraTest)
+        ("testMove", testMove),
+        ("testJson", testJson),
+        ("testDijkstra", testDijkstra)
     ]
 }
