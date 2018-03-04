@@ -34,10 +34,22 @@ class LabyrinthTableGraphTests: XCTestCase {
     }
 
     func jsonTest() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct
-        // results.
-        //XCTAssertEqual(LabyrinthTableGraph().text, "Hello, World!")
+        t[2,0] = Box.Intersection(direction: .North)
+        t[2,1] = Box.Intersection(direction: .South)
+        t[2,2] = Box.Linear(orientation: .Horizontal)
+        t[2,3] = Box.Intersection(direction: .East)
+        t[2,4] = Box.Intersection(direction: .West)
+
+        let original = t.description
+
+        let data = try! JSONEncoder().encode(t)
+        let string = String(data: data, encoding: .utf8)!
+
+        let t2 = try! JSONDecoder().decode(LabyrinthTableGraph.self, from: data)
+        
+        let reEncoded = t2.description
+
+        XCTAssertEqual(original, reEncoded)
     }
 
     func dijkstraTest() {
